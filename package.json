@@ -1,0 +1,27 @@
+{
+  "name": "fsearch",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "author": "Vu Tran <vu@vu-tran.com>",
+  "license": "MIT",
+  "dependencies": {
+    "co": "^4.6.0",
+    "glob": "^7.0.5",
+    "os-homedir": "^1.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "eslint-config-xo-space": "^0.14.0",
+    "xo": "^0.16.0"
+  },
+  "description": "Searches for files",
+  "xo": {
+    "extends": "xo-space",
+    "rules": {
+      "comma-dangle": 0
+    }
+  }
+}
