@@ -1,6 +1,7 @@
 {
   "name": "fsearch",
   "version": "0.0.0",
+  "description": "Searches for files",
   "main": "index.js",
   "scripts": {
     "test": "ava"
@@ -18,7 +19,6 @@
     "eslint-config-xo-space": "^0.14.0",
     "xo": "^0.16.0"
   },
-  "description": "Searches for files",
   "xo": {
     "extends": "xo-space",
     "rules": {
