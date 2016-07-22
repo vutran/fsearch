@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const co = require('co');
 const osHomedir = require('os-homedir');
 const glob = require('glob');
@@ -39,12 +38,10 @@ function getFilesInDirectory(dir) {
  *
  * @param {String} input
  * @param {String} dir - A single directory
- * @param {Object} opts - Configure the search options
  * @return {Promise[]} - A Promise of matched files
  */
-function findInDirectory(input, dir, opts = defaultOpts) {
+function findInDirectory(input, dir) {
   return new Promise(resolve => {
-    const searchResults = [];
     getFilesInDirectory(dir)
       .then(results => {
         const filteredResults = utils.matchFiles(input, results);
@@ -84,7 +81,7 @@ function findInDirectories(input, dirs, opts = defaultOpts) {
  * @return {Promise}
  */
 function fsearch(input, opts = defaultOpts) {
-  mergedOpts = deepAssign({}, opts);
+  const mergedOpts = deepAssign({}, opts);
   return new Promise(resolve => {
     findInDirectories(input, mergedOpts.searchDirs, opts)
       .then(res => {

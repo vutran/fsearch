@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 
 /**
  * Matches the input against the list of files
