@@ -4,6 +4,7 @@ const osHomedir = require('os-homedir');
 const glob = require('glob');
 const deepAssign = require('deep-assign');
 const utils = require('./utils');
+const store = require('./store');
 
 const defaultOpts = {
   searchDirs: [
@@ -25,11 +26,27 @@ const defaultOpts = {
  */
 function getFilesInDirectory(dir) {
   return new Promise(resolve => {
-    glob(path.join(dir, '*'), {}, (err, files) => {
-      if (!err) {
-        resolve(files);
-      }
-    });
+    store
+      .connect()
+      .then(() => {
+        co(function * () {
+          // fetch from the cache store if necessary
+          const found = yield store.findInDir(dir);
+          if (found && found.length) {
+            const files = found.map(f => f.file);
+            resolve(files);
+          } else {
+            // otherwise, glob it!
+            glob(path.join(dir, '*'), {}, (err, files) => {
+              if (!err) {
+                // cache the files
+                files.forEach(f => { store.upsert(f); });
+                resolve(files);
+              }
+            });
+          }
+        });
+      });
   });
 }
 

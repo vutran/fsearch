@@ -10,6 +10,7 @@
   },
   "files": [
     "index.js",
+    "store.js",
     "utils.js"
   ],
   "author": "Vu Tran <vu@vu-tran.com>",
@@ -17,7 +18,9 @@
   "dependencies": {
     "co": "^4.6.0",
     "deep-assign": "^2.0.0",
+    "env-paths": "^0.3.0",
     "glob": "^7.0.5",
+    "nedb": "^1.8.0",
     "os-homedir": "^1.0.1"
   },
   "devDependencies": {
