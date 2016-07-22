@@ -73,12 +73,17 @@ test('find files that matches an input in a given directory', async t => {
   t.deepEqual(results, expected);
 });
 
-test('find files that matches an input globally', async t => {
+test('find files that matches an input in the current directory', async t => {
   t.plan(1);
-  const input = 'Google Chrome.app';
-  const results = await fsearch(input);
+  const input = 'package.json';
+  const opts = {
+    searchDirs: [
+      __dirname,
+    ],
+  };
+  const results = await fsearch(input, opts);
   const expected = [
-    '/Applications/Google Chrome.app',
+    path.join(__dirname, 'package.json'),
   ];
   t.deepEqual(results, expected);
 });

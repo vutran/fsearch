@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "co": "^4.6.0",
+    "deep-assign": "^2.0.0",
     "glob": "^7.0.5",
     "os-homedir": "^1.0.1"
   },

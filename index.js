@@ -3,12 +3,17 @@ const fs = require('fs');
 const co = require('co');
 const osHomedir = require('os-homedir');
 const glob = require('glob');
+const deepAssign = require('deep-assign');
 const utils = require('./utils');
 
 const defaultOpts = {
+  searchDirs: [
+    osHomedir(),
+    '/Applications',
+  ],
   exclude: [
     /^\./,
-    /node_modules\//,
+    /node_modules/,
     /.log$/,
   ],
 };
@@ -20,10 +25,8 @@ const defaultOpts = {
  * @return {Promise} - A Promise of an array of file paths
  */
 function getFilesInDirectory(dir) {
-  const opts = {
-  };
   return new Promise(resolve => {
-    glob(path.join(dir, '*'), opts, (err, files) => {
+    glob(path.join(dir, '*'), {}, (err, files) => {
       if (!err) {
         resolve(files);
       }
@@ -67,8 +70,8 @@ function findInDirectories(input, dirs, opts = defaultOpts) {
       });
       const results = yield promises;
       const flattened = results.reduce((a, b) => a.concat(b));
-      const filtedResults = utils.filterByMultipleRules(flattened, opts.exclude);
-      resolve(filtedResults);
+      const filteredResults = utils.filterByMultipleRules(flattened, opts.exclude);
+      resolve(filteredResults);
     });
   });
 }
@@ -81,12 +84,9 @@ function findInDirectories(input, dirs, opts = defaultOpts) {
  * @return {Promise}
  */
 function fsearch(input, opts = defaultOpts) {
-  const searchDirs = [
-    osHomedir(),
-    '/Applications',
-  ];
+  mergedOpts = deepAssign({}, opts);
   return new Promise(resolve => {
-    findInDirectories(input, searchDirs, opts)
+    findInDirectories(input, mergedOpts.searchDirs, opts)
       .then(res => {
         resolve(res || []);
       });

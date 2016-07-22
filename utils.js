@@ -44,7 +44,7 @@ function filterByRule(directories, rule) {
  * @param {RegExp[]} rules - An array of rules
  * @return {String[]}
  */
-function filterByMultipleRules(directories, rules) {
+function filterByMultipleRules(directories, rules = []) {
   let filtered = directories.concat([]);
   rules.forEach(rule => {
     filtered = filterByRule(filtered, rule);
