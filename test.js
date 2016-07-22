@@ -1,7 +1,7 @@
 import path from 'path';
 import test from 'ava';
 import utils from './utils';
-import m from '.';
+import fsearch from '.';
 
 test('filter by single rule', t => {
   t.plan(1);
@@ -43,7 +43,7 @@ test('filter by multiple rules', t => {
 test('get files in directory', async t => {
   t.plan(1);
   const directory = __dirname;
-  const res = await m.getFilesInDirectory(directory);
+  const res = await fsearch.getFilesInDirectory(directory);
   t.true(res instanceof Array);
 });
 
@@ -55,7 +55,7 @@ test('match files with a given input against a list of files', async t => {
     '/Applications/Safari.app',
     '/Applications/Google Chrome.app',
   ];
-  const matches = m.matchFiles(input, files);
+  const matches = fsearch.matchFiles(input, files);
   const expected = [
     '/Applications/Google Chrome.app',
   ];
@@ -66,7 +66,7 @@ test('find files that matches an input in a given directory', async t => {
   t.plan(1);
   const input = 'package.json';
   const directory = __dirname;
-  const results = await m.findInDirectory(input, directory);
+  const results = await fsearch.findInDirectory(input, directory);
   const expected = [
     path.join(__dirname, 'package.json'),
   ];
@@ -76,7 +76,7 @@ test('find files that matches an input in a given directory', async t => {
 test('find files that matches an input globally', async t => {
   t.plan(1);
   const input = 'Google Chrome.app';
-  const results = await m.fsearch(input);
+  const results = await fsearch(input);
   const expected = [
     '/Applications/Google Chrome.app',
   ];
