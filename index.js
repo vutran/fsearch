@@ -32,23 +32,6 @@ function getFilesInDirectory(dir) {
 }
 
 /**
- * Matches the input against the list of files
- *
- * - Basename must match
- *
- * @param {String} input - The input
- * @param {Array} files - An array of file paths
- */
-function matchFiles(input, files) {
-  return files.filter(f => {
-    if (path.basename(f).toLowerCase() === input.toLowerCase()) {
-      return true;
-    }
-    return false;
-  });
-}
-
-/**
  * Find files in a given directory
  *
  * @param {String} input
@@ -61,7 +44,7 @@ function findInDirectory(input, dir, opts = defaultOpts) {
     const searchResults = [];
     getFilesInDirectory(dir)
       .then(results => {
-        const filteredResults = matchFiles(input, results);
+        const filteredResults = utils.matchFiles(input, results);
         resolve(filteredResults);
       });
   });
@@ -111,7 +94,6 @@ function fsearch(input, opts = defaultOpts) {
 }
 
 fsearch.getFilesInDirectory = getFilesInDirectory;
-fsearch.matchFiles = matchFiles;
 fsearch.findInDirectory = findInDirectory;
 
 module.exports = fsearch;

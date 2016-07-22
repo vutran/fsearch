@@ -1,33 +1,27 @@
+const path = require('path');
 const fs = require('fs');
 
 /**
- * Checks if the given path is a file
+ * Matches the input against the list of files
  *
- * @param {String} path - The full path to the file/directory
- * @return {Boolean} - Returns true if the input is a file
- */
-function isFile(path) {
-  try {
-    const stats = fs.statSync(path);
-    return stats.isFile();
-  } catch (err) {
-    return false;
-  }
-}
-
-/**
- * Checks if the given path is a directory
+ * - Base name matches
+ * - File name matches
  *
- * @param {String} path - The full path to the file/directory
- * @return {Boolean} - Returns true if the input is a directory
+ * @param {String} input - The input
+ * @param {Array} files - An array of file paths
  */
-function isDirectory(path) {
-  try {
-    const stats = fs.statSync(path);
-    return stats.isDirectory();
-  } catch (err) {
+function matchFiles(input, files) {
+  return files.filter(f => {
+    const baseName = path.basename(f);
+    const fileName = path.basename(f, path.extname(f));
+    const inputLower = input.toLowerCase();
+    if (baseName.toLowerCase() === inputLower) {
+      return true;
+    } else if (fileName.toLowerCase() === inputLower) {
+      return true;
+    }
     return false;
-  }
+  });
 }
 
 /**
@@ -59,8 +53,7 @@ function filterByMultipleRules(directories, rules) {
 }
 
 module.exports = {
-  isFile,
-  isDirectory,
+  matchFiles,
   filterByRule,
   filterByMultipleRules,
 };

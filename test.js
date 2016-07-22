@@ -49,13 +49,13 @@ test('get files in directory', async t => {
 
 test('match files with a given input against a list of files', async t => {
   t.plan(1);
-  const input = 'Google Chrome.app';
+  const input = 'Google Chrome';
   const files = [
     '/Applications/Firefox.app',
     '/Applications/Safari.app',
     '/Applications/Google Chrome.app',
   ];
-  const matches = fsearch.matchFiles(input, files);
+  const matches = utils.matchFiles(input, files);
   const expected = [
     '/Applications/Google Chrome.app',
   ];
