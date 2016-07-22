@@ -4,7 +4,7 @@
 
 ## Install
 
-``bash
+```bash
 $ npm install --save fsearch
 ```
 
